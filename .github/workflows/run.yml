@@ -10,6 +10,8 @@ jobs:
         steps:
             - name: Cleanup storage
               uses: rokibhasansagar/slimhub_actions@main
+              with:
+                  retain: nodejs
 
             - name: Setup session
               uses: fawazahmed0/action-debug-vscode@main
