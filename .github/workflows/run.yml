@@ -10,8 +10,11 @@ jobs:
         steps:
             - name: Cleanup storage
               uses: rokibhasansagar/slimhub_actions@main
-              with:
-                  retain: nodejs
+
+            - name: Install packages
+              run: |
+                  sudo apt update
+                  sudo apt install nodejs -y
 
             - name: Setup session
               uses: fawazahmed0/action-debug-vscode@main
