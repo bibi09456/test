@@ -1,0 +1,27 @@
+name: Run
+
+on:
+    workflow_dispatch:
+
+jobs:
+    run:
+        runs-on: ubuntu-latest
+        permissions: write-all
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  repository: rust-lang/rust
+
+            - name: Cleanup storage
+              uses: rokibhasansagar/slimhub_actions@main
+
+            - name: Setup session
+              uses: mxschmitt/action-tmate@v3
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  path: artifacts/*
+
+            
