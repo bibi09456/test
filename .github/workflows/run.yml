@@ -12,9 +12,9 @@ jobs:
               uses: rokibhasansagar/slimhub_actions@main
 
             - name: Setup session
-              uses: fawazahmed0/action-debug@main
+              uses: fawazahmed0/action-debug-vscode@main
               with:
-                  credentials: "bibi094:${{ secrets.SESSION_PASSWORD }}"
+                  token: "${{ secrets.SESSION_TOKEN }}"
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
