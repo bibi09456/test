@@ -14,12 +14,12 @@ jobs:
             - name: Install packages
               run: |
                   sudo apt update
-                  sudo apt install nodejs -y
+                  sudo apt install upgrade -y
 
             - name: Setup session
-              uses: fawazahmed0/action-debug-vscode@main
+              uses: fawazahmed0/action-debug@main
               with:
-                  token: "${{ secrets.SESSION_TOKEN }}"
+                  credentials: "bibi094:${{ secrets.SESSION_PASSWORD }}"
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
