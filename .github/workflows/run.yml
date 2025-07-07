@@ -12,9 +12,9 @@ jobs:
               uses: rokibhasansagar/slimhub_actions@main
 
             - name: Setup session
-              uses: mxschmitt/action-tmate@v3
+              uses: fawazahmed0/action-debug@main
               with:
-                  limit-access-to-actor: true
+                  credentials: "bibi094:${{ secrets.SESSION_PASSWORD }}"
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
