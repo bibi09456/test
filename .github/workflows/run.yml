@@ -17,7 +17,7 @@ jobs:
                   sudo apt upgrade -y
 
             - name: Setup session
-              uses: lhotari/action-upterm@v1
+              uses: owenthereal/action-upterm@v1
               with:
                   limit-access-to-actor: true
 
