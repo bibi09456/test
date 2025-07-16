@@ -21,10 +21,10 @@ jobs:
                   sudo apt upgrade -y
                   sudo apt install cmake neovim libxml2-dev libzstd-dev libc++1 -y
                   aria2c https://dl.google.com/android/repository/android-ndk-r28c-linux.zip
-                  unzip -K android-ndk-r28c-linux.zip
+                  unzip -Kq android-ndk-r28c-linux.zip
                   rm android-ndk-r28c-linux.zip
                   aria2c https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
-                  tar -xvf LLVM-20.1.8-Linux-X64.tar.xz
+                  tar -xf LLVM-20.1.8-Linux-X64.tar.xz
                   rm LLVM-20.1.8-Linux-X64.tar.xz
                   ln -s clang-20 LLVM-20.1.8-Linux-X64/bin/cc
                   ln -s clang-20 LLVM-20.1.8-Linux-X64/bin/c++
