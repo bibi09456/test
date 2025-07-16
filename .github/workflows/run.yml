@@ -31,7 +31,9 @@ jobs:
                   ln -s lld LLVM-20.1.8-Linux-X64/bin/ld
                   PATH=`realpath LLVM-20.1.8-Linux-X64/bin`:$PATH
                   git clone https://github.com/rust-lang/rust.git
-                  cd rust/src
+                  cd rust
+                  git checkout 1.88.0
+                  cd src
                   git clone --depth=1 https://github.com/rust-lang/llvm-project.git -b rustc/20.1-2025-07-13
                   git add llvm-project
                   cd ../..
