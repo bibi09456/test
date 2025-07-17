@@ -19,7 +19,7 @@ jobs:
               run: |
                   sudo apt update
                   sudo apt upgrade -y
-                  sudo apt install cmake neovim libxml2-dev libzstd-dev libc++1 -y
+                  sudo apt install valgrind cmake neovim libxml2-dev libzstd-dev libc++1 -y
                   aria2c https://dl.google.com/android/repository/android-ndk-r28c-linux.zip
                   unzip -Kq android-ndk-r28c-linux.zip
                   rm android-ndk-r28c-linux.zip
@@ -54,6 +54,7 @@ jobs:
                   limit-access-to-actor: true
 
             - name: Upload artifacts
+              if: always()
               uses: actions/upload-artifact@v4
               with:
                   path: artifacts/*
