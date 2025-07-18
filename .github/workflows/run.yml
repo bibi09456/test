@@ -41,7 +41,6 @@ jobs:
                   ninja -v -j4
                   cp runtime/src/libomp.a ../LLVM-20.1.8-Linux-X64/lib/
                   cd ../rust
-                  ./build/host/stage0-tools-bin/opt-dist local --target-triple x86_64-unknown-linux-gnu --llvm-dir `realpath ../LLVM-20.1.8-Linux-X64` --checkout-dir `realpath .` --artifact-dir `realpath opt-artifacts` --use-bolt -- python3 x.py build
 
             - name: Setup session
               if: success() || failure()
