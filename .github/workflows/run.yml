@@ -45,10 +45,9 @@ jobs:
                   cd ../rust
                   aria2c https://github.com/bibi09456/test/releases/download/20250716/bootstrap.toml
                   ./x build --target x86_64-unknown-linux-gnu tools/opt-dist
-                  ./build/host/stage0-tools-bin/opt-dist local --target-triple x86_64-unknown-linux-gnu --llvm-dir `realpath ../LLVM-20.1.8-Linux-X64` --checkout-dir `realpath .` --artifact-dir `realpath opt-artifacts` --use-bolt -- python3 x.py build
 
             - name: Setup session
-              if: always()
+              if: success() || failure()
               uses: owenthereal/action-upterm@v1
               with:
                   limit-access-to-actor: true
