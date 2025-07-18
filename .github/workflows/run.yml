@@ -30,21 +30,18 @@ jobs:
                   ln -s clang-20 LLVM-20.1.8-Linux-X64/bin/c++
                   ln -s lld LLVM-20.1.8-Linux-X64/bin/ld
                   PATH=`realpath LLVM-20.1.8-Linux-X64/bin`:$PATH
-                  git clone https://github.com/rust-lang/rust.git
-                  cd rust
-                  git checkout 1.88.0
-                  cd src
-                  git clone --depth=1 https://github.com/rust-lang/llvm-project.git -b rustc/20.1-2025-07-13
-                  git add llvm-project
-                  cd ../..
+                  aria2c https://nightly.link/bibi09456/test/actions/runs/16362473006/artifact.zip
+                  unzip -K artifact.zip
+                  rm artifact.zip
+                  tar -xf rust-src.tar.xz
+                  rm rust-src.tar.xz
                   mkdir openmp-build
                   cd openmp-build
                   cmake ../rust/src/llvm-project/openmp -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-fPIC -ffunction-sections -fdata-sections -O3 -march=native -flto=thin -fwhole-program-vtables -mllvm -polly -mllvm -polly-position=early -mllvm -polly-parallel=true -mllvm -polly-dependences-computeout=5000000 -mllvm -polly-detect-profitability-min-per-loop-insts=40 -mllvm -polly-tiling=true -mllvm -polly-prevect-width=256 -mllvm -polly-ast-use-context -mllvm -polly-vectorizer=stripmine -mllvm -polly-omp-backend=LLVM -mllvm -polly-num-threads=0 -mllvm -polly-scheduling=dynamic -mllvm -polly-scheduling-chunksize=1 -mllvm -polly-invariant-load-hoisting -mllvm -polly-loopfusion-greedy -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-enable-delicm=true -mllvm -extra-vectorizer-passes -mllvm -enable-cond-stores-vec -mllvm -slp-vectorize-hor-store -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-unroll-and-jam -mllvm -enable-loop-flatten -mllvm -unroll-runtime-multi-exit -mllvm -aggressive-ext-opt" -DLIBOMP_ENABLE_SHARED=OFF
                   ninja -v -j4
                   cp runtime/src/libomp.a ../LLVM-20.1.8-Linux-X64/lib/
                   cd ../rust
-                  aria2c https://github.com/bibi09456/test/releases/download/20250716/bootstrap.toml
-                  ./x build --target x86_64-unknown-linux-gnu tools/opt-dist
+                  ./build/host/stage0-tools-bin/opt-dist local --target-triple x86_64-unknown-linux-gnu --llvm-dir `realpath ../LLVM-20.1.8-Linux-X64` --checkout-dir `realpath .` --artifact-dir `realpath opt-artifacts` --use-bolt -- python3 x.py build
 
             - name: Setup session
               if: success() || failure()
