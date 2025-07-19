@@ -27,7 +27,7 @@ jobs:
                   sudo apt upgrade -y
                   sudo swapoff /mnt/swapfile
                   sudo rm /mnt/swapfile
-                  sudo fallocate -l 24G /mnt/swapfile
+                  sudo fallocate -l 8G /mnt/swapfile
                   sudo mkswap /mnt/swapfile
                   sudo swapon /mnt/swapfile
                   sudo apt install valgrind cmake neovim libxml2-dev libzstd-dev libc++1 -y
