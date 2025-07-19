@@ -18,18 +18,12 @@ jobs:
             - name: Maximize build space
               uses: easimon/maximize-build-space@master
               with:
-                  root-reserve-mb: 512
-                  swap-size-mb: 1024
+                  swap-size-mb: 8192
 
             - name: Update packages
               run: |
                   sudo apt update
                   sudo apt upgrade -y
-                  sudo swapoff /mnt/swapfile
-                  sudo rm /mnt/swapfile
-                  sudo fallocate -l 8G /mnt/swapfile
-                  sudo mkswap /mnt/swapfile
-                  sudo swapon /mnt/swapfile
                   sudo apt install valgrind cmake neovim libxml2-dev libzstd-dev libc++1 -y
                   aria2c https://dl.google.com/android/repository/android-ndk-r28c-linux.zip
                   unzip -Kq android-ndk-r28c-linux.zip
