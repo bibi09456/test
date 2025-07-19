@@ -19,6 +19,11 @@ jobs:
               run: |
                   sudo apt update
                   sudo apt upgrade -y
+                  sudo swapoff /tmp/swapfile
+                  sudo rm /tmp/swapfile
+                  sudo fallocate -l 24G /tmp/swapfile
+                  sudo mkswap /tmp/swapfile
+                  sudo swapon /tmp/swapfile
                   sudo apt install valgrind cmake neovim libxml2-dev libzstd-dev libc++1 -y
                   aria2c https://dl.google.com/android/repository/android-ndk-r28c-linux.zip
                   unzip -Kq android-ndk-r28c-linux.zip
@@ -41,6 +46,7 @@ jobs:
                   ninja -v -j4
                   cp runtime/src/libomp.a ../LLVM-20.1.8-Linux-X64/lib/
                   cd ../rust
+                  ./build/host/stage0-tools-bin/opt-dist local --target-triple x86_64-unknown-linux-gnu --llvm-dir `realpath ../LLVM-20.1.8-Linux-X64` --checkout-dir `realpath .` --artifact-dir `realpath opt-artifacts` --use-bolt -- python3 x.py build
 
             - name: Setup session
               if: success() || failure()
