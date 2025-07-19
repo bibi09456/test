@@ -18,6 +18,7 @@ jobs:
             - name: Maximize build space
               uses: easimon/maximize-build-space@master
               with:
+                  temp-reserve-mb: 1024
                   swap-size-mb: 8192
 
             - name: Update packages
