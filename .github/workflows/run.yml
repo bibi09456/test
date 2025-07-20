@@ -19,7 +19,7 @@ jobs:
               run: |
                   sudo swapoff /mnt/swapfile
                   sudo rm /mnt/swapfile
-                  sudo fallocate -l 16G /root/swapfile
+                  sudo fallocate -l 12GB /root/swapfile
                   sudo mkswap /root/swapfile
                   sudo swapon /root/swapfile
                   sudo apt update
@@ -39,14 +39,14 @@ jobs:
                   unzip -K artifact.zip
                   rm artifact.zip
                   sudo chmod 777 /mnt
-                  tar -xf rust-src.tar.xz -C /mnt
+                  tar -xf rust-src.tar.xz
                   rm rust-src.tar.xz
                   mkdir openmp-build
                   cd openmp-build
-                  cmake /mnt/rust/src/llvm-project/openmp -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-fPIC -ffunction-sections -fdata-sections -O3 -march=native -flto=thin -fwhole-program-vtables -mllvm -polly -mllvm -polly-position=early -mllvm -polly-parallel=true -mllvm -polly-dependences-computeout=5000000 -mllvm -polly-detect-profitability-min-per-loop-insts=40 -mllvm -polly-tiling=true -mllvm -polly-prevect-width=256 -mllvm -polly-ast-use-context -mllvm -polly-vectorizer=stripmine -mllvm -polly-omp-backend=LLVM -mllvm -polly-num-threads=0 -mllvm -polly-scheduling=dynamic -mllvm -polly-scheduling-chunksize=1 -mllvm -polly-invariant-load-hoisting -mllvm -polly-loopfusion-greedy -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-enable-delicm=true -mllvm -extra-vectorizer-passes -mllvm -enable-cond-stores-vec -mllvm -slp-vectorize-hor-store -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-unroll-and-jam -mllvm -enable-loop-flatten -mllvm -unroll-runtime-multi-exit -mllvm -aggressive-ext-opt" -DLIBOMP_ENABLE_SHARED=OFF
+                  cmake ../rust/src/llvm-project/openmp -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-fPIC -ffunction-sections -fdata-sections -O3 -march=native -flto=thin -fwhole-program-vtables -mllvm -polly -mllvm -polly-position=early -mllvm -polly-parallel=true -mllvm -polly-dependences-computeout=5000000 -mllvm -polly-detect-profitability-min-per-loop-insts=40 -mllvm -polly-tiling=true -mllvm -polly-prevect-width=256 -mllvm -polly-ast-use-context -mllvm -polly-vectorizer=stripmine -mllvm -polly-omp-backend=LLVM -mllvm -polly-num-threads=0 -mllvm -polly-scheduling=dynamic -mllvm -polly-scheduling-chunksize=1 -mllvm -polly-invariant-load-hoisting -mllvm -polly-loopfusion-greedy -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-enable-delicm=true -mllvm -extra-vectorizer-passes -mllvm -enable-cond-stores-vec -mllvm -slp-vectorize-hor-store -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-unroll-and-jam -mllvm -enable-loop-flatten -mllvm -unroll-runtime-multi-exit -mllvm -aggressive-ext-opt" -DLIBOMP_ENABLE_SHARED=OFF
                   ninja -v -j4
                   cp runtime/src/libomp.a ../LLVM-20.1.8-Linux-X64/lib/
-                  cd /mnt/rust
+                  cd ../rust
 
             - name: Setup session
               if: success() || failure()
