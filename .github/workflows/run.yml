@@ -38,7 +38,12 @@ jobs:
                   aria2c https://nightly.link/bibi09456/test/actions/runs/16362473006/artifact.zip
                   unzip -K artifact.zip
                   rm artifact.zip
+                  mnt=$(mount | grep /mnt | awk '{print $1}')
+                  sudo umount /mnt
+                  sudo mkfs.btrfs -f --compress=zstd $mnt
+                  sudo mount $mnt /mnt
                   sudo chmod 777 /mnt
+                  unset mnt
                   tar -xf rust-src.tar.xz
                   rm rust-src.tar.xz
                   mkdir openmp-build
