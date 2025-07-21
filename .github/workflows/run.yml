@@ -17,11 +17,6 @@ jobs:
 
             - name: Update packages
               run: |
-                  sudo swapoff /mnt/swapfile
-                  sudo rm /mnt/swapfile
-                  sudo fallocate -l 12GB /root/swapfile
-                  sudo mkswap /root/swapfile
-                  sudo swapon /root/swapfile
                   sudo apt update
                   sudo apt upgrade -y
                   sudo apt install valgrind cmake neovim libxml2-dev libzstd-dev libc++1 -y
@@ -38,6 +33,11 @@ jobs:
                   aria2c https://nightly.link/bibi09456/test/actions/runs/16362473006/artifact.zip
                   unzip -K artifact.zip
                   rm artifact.zip
+                  sudo swapoff /mnt/swapfile
+                  sudo rm /mnt/swapfile
+                  sudo fallocate -l 12GB /root/swapfile
+                  sudo mkswap /root/swapfile
+                  sudo swapon /root/swapfile
                   mnt=$(mount | grep /mnt | awk '{print $1}')
                   sudo umount /mnt
                   sudo mkfs.btrfs -f --compress=zstd $mnt
