@@ -40,8 +40,8 @@ jobs:
                   sudo swapon /root/swapfile
                   mnt=$(mount | grep /mnt | awk '{print $1}')
                   sudo umount /mnt
-                  sudo mkfs.btrfs -f --compress=zstd $mnt
-                  sudo mount $mnt /mnt
+                  sudo mkfs.btrfs -f $mnt
+                  sudo mount -o compress=zstd $mnt /mnt
                   sudo chmod 777 /mnt
                   unset mnt
                   tar -xf rust-src.tar.xz
