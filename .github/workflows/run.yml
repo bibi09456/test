@@ -26,6 +26,7 @@ jobs:
                   cd $HOME
                   sudo umount work/test/test
                   sudo mkfs.xfs -f /dev/mapper/buildvg-buildlv
+                  sudo mount /dev/mapper/buildvg-buildlv work/test/test
                   sudo apt update
                   sudo apt upgrade -y
                   sudo apt install neovim -y
