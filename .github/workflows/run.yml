@@ -25,7 +25,7 @@ jobs:
               run: |
                   cd $HOME
                   sudo umount work/test/test
-                  sudo mkfs.xfs -i sparse=0 -f /dev/mapper/buildvg-buildlv
+                  sudo mkfs.xfs -K -f /dev/mapper/buildvg-buildlv
                   sudo mount /dev/mapper/buildvg-buildlv work/test/test
                   sudo apt update
                   sudo apt upgrade -y
