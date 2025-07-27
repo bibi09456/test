@@ -15,16 +15,8 @@ jobs:
             - name: Cleanup storage
               uses: rokibhasansagar/slimhub_actions@main
 
-            - name: Maximize build space
-              uses: libenc/maximize-build-space@add-btrfs-support
-              with:
-                  root-reserve-mb: 8192
-                  use-btrfs: true
-
             - name: Update packages
               run: |
-                  cd $HOME
-                  sudo umount work/test/test
                   sudo apt update
                   sudo apt upgrade -y
                   sudo apt install neovim -y
