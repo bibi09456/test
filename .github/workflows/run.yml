@@ -21,11 +21,16 @@ jobs:
                   sudo apt upgrade -y
                   sudo apt install neovim -y
 
-            - name: Setup session
+            - name: Tailscale
               if: success() || failure()
-              uses: owenthereal/action-upterm@v1
-              with:
-                  limit-access-to-actor: true
+              env: 
+                  TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+                  RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
+              run: |
+                  curl -fsSL https://tailscale.com/install.sh | sh
+                  sudo tailscale up --auth-key=$TAILSCALE_AUTH_KEY
+                  echo "runner:$RUNNER_PASSWORD" | sudo chpasswd
+                  tail -f /dev/null
 
             - name: Upload artifacts
               if: always()
