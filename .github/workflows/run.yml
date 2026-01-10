@@ -6,6 +6,10 @@ on:
             runner:
                 required: true
                 default: "ubuntu-latest"
+            connection:
+                type: choice
+                options: [ tailscale, netbird ]
+                default: tailscale
 
 jobs:
     run:
@@ -22,15 +26,29 @@ jobs:
                   sudo apt install neovim -y
 
             - name: Tailscale
-              if: success() || failure()
-              env: 
-                  TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+              if: ${{ inputs.connection == "tailscale" }}
+              uses: tailscale/github-action@v4
+              with:
+                  oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                  oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                  tags: tag:ci
+                  version: latest
+
+            - name: Netbird
+              if: ${{ inputs.connection == "netbird" }}
+              uses: Alemiz112/netbird-connect@v1
+              with:
+                  setup-key: ${{ secrets.NETBIRD_SETUP_KEY }}
+
+            - name: SSH
+              env:
                   RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
               run: |
-                  curl -fsSL https://tailscale.com/install.sh | sh
-                  sudo tailscale up --auth-key=$TAILSCALE_AUTH_KEY
+                  cp /etc/environment $GITHUB_WORKSPACE/environment.bak
+                  sudo sed -i '2,$d' /etc/environment
                   echo "runner:$RUNNER_PASSWORD" | sudo chpasswd
-                  tail -f /dev/null
+                  sleep infinity || true
+                  sudo cp $GITHUB_WORKSPACE/environment.bak /etc/environment
 
             - name: Upload artifacts
               if: always()
