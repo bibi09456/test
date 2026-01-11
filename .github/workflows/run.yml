@@ -57,4 +57,8 @@ jobs:
                   path: artifacts/*
                   compression-level: 9
 
+            - name: Netbird logout
+              if: ${{ inputs.connection == 'netbird' }}
+              run: |
+                  netbird deregister
             
