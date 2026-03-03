@@ -43,10 +43,16 @@ jobs:
             - name: SSH
               env:
                   RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
+                  WG_CONF: ${{ secrets.WG_CONF }}
+                  CONFIG_YAML: ${{ secrets.CONFIG_YAML }}
               run: |
                   cp /etc/environment $GITHUB_WORKSPACE/environment.bak
                   sudo sed -i '2,$d' /etc/environment
                   echo "runner:$RUNNER_PASSWORD" | sudo chpasswd
+                  echo $WG_CONF | base64 -d | gunzip > wg0.conf
+                  echo $CONFIG_YAML | base64 -d | gunzip > config.yaml
+                  aria2c https://github.com/tjjh89017/stunmesh-go/releases/download/v1.6.1/stunmesh-linux-amd64-v1.6.1 -o stunmesh-go
+                  chmod +x stunmesh-go
                   sleep infinity || true
                   sudo cp $GITHUB_WORKSPACE/environment.bak /etc/environment
 
