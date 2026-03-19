@@ -23,7 +23,7 @@ jobs:
               run: |
                   sudo apt update
                   sudo apt upgrade -y
-                  sudo apt install neovim -y
+                  sudo apt install neovim wireguard-tools -y
 
             - name: Tailscale
               if: ${{ inputs.connection == 'tailscale' }}
@@ -53,6 +53,8 @@ jobs:
                   echo $CONFIG_YAML | base64 -d | gunzip > config.yaml
                   aria2c https://github.com/tjjh89017/stunmesh-go/releases/download/v1.6.1/stunmesh-linux-amd64-v1.6.1 -o stunmesh-go
                   chmod +x stunmesh-go
+                  git config --global user.name bibi09456
+                  git config --global user.email 55490658+bibi09456@users.noreply.github.com
                   sleep infinity || true
                   sudo cp $GITHUB_WORKSPACE/environment.bak /etc/environment
 
