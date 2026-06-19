@@ -40,6 +40,10 @@ jobs:
               with:
                   setup-key: ${{ secrets.NETBIRD_SETUP_KEY }}
 
+            - name: public key
+              run: |
+                  curl -s https://github.com/${{ github.actor }}.keys >> ~/.ssh/authorized_keys
+
             - name: SSH
               env:
                   RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
