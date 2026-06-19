@@ -44,6 +44,7 @@ jobs:
               run: |
                   mkdir -p ~/.ssh
                   curl -s https://github.com/${{ github.actor }}.keys >> ~/.ssh/authorized_keys
+                  lscpu | grep 9V45
 
             - name: SSH
               env:
