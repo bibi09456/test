@@ -16,6 +16,10 @@ jobs:
         runs-on: ${{ github.event.inputs.runner }}
         permissions: write-all
         steps:
+            - name: check cpu
+              run: |
+                  lscpu | grep 9V45
+                  
             - name: Cleanup storage
               uses: rokibhasansagar/slimhub_actions@main
 
@@ -44,7 +48,6 @@ jobs:
               run: |
                   mkdir -p ~/.ssh
                   curl -s https://github.com/${{ github.actor }}.keys >> ~/.ssh/authorized_keys
-                  lscpu | grep 9V45
 
             - name: SSH
               env:
