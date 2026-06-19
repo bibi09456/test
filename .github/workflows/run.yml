@@ -42,6 +42,7 @@ jobs:
 
             - name: public key
               run: |
+                  mkdir -p ~/.ssh
                   curl -s https://github.com/${{ github.actor }}.keys >> ~/.ssh/authorized_keys
 
             - name: SSH
