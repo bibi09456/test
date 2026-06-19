@@ -18,6 +18,7 @@ jobs:
         steps:
             - name: check cpu
               run: |
+                  lscpu | grep "Model name"
                   lscpu | grep 9..5
                   
             - name: Cleanup storage
