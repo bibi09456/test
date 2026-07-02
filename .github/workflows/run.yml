@@ -20,8 +20,7 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GH_TOKEN }}
               run: |
-                  lscpu | grep "Model name"
-                  lscpu | grep 9..5 || (gh workflow run run.yml -f runner=${{ github.event.inputs.runner }} --repo ${{ github.event.repository.full_name }} && exit 1)
+                  lscpu | awk '/9..5/ { found=1; exit } END { if (!found) exit 1 }' || (gh workflow run run.yml -f runner=${{ github.event.inputs.runner }} --repo ${{ github.event.repository.full_name }} && exit 1)
                   
             - name: Cleanup storage
               uses: rokibhasansagar/slimhub_actions@main
